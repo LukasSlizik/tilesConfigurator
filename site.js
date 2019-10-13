@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var selectors = document.getElementsByClassName(dimensionSelectorClass);
     for (let selector of selectors) {
         selector.addEventListener("click", function(event) {
-            generateGrid();
+            // generateGrid();
+            generateArabesqueGrid();
         });
     }
 
@@ -41,6 +42,44 @@ function populateTiles() {
     }
 }
 
+function generateArabesqueGrid() {
+    saveCurrentConfiguration();
+    clearGrid();
+    
+    var height = document.getElementById(heightSelectorId).value;
+    var width = document.getElementById(widthSelectorId).value;
+
+    var grid = document.getElementById(gridId);
+    for (let i = 0; i < height; i++)
+    {
+        for (let j = 0; j < width; j++)
+        {
+            var node = document.createElement("img");
+            node.src = 'tiles/arabesque.png'
+            node.classList.add(tileClass);
+
+            node.dataset.i = i;
+            node.dataset.j = j;
+            node.addEventListener("click", function(event) {
+                var url = `url('${tilesBasePath}${selectedTile}')`;
+                event.target.style.backgroundImage = url;
+                event.target.classList.add(tileSetClass);
+            });
+
+            var existingConfiguration = currentConfigurations.filter(function(configuration) { 
+                return (configuration.i == i) && (configuration.j == j);
+            });
+            if (existingConfiguration.length == 1) {
+                node.style.backgroundImage = existingConfiguration[0].image;
+                node.classList.add(tileSetClass);
+            }
+
+            grid.appendChild(node);
+        }
+        grid.appendChild(document.createElement("br"));
+    }
+}
+
 function generateGrid() {
     saveCurrentConfiguration();
     clearGrid();
@@ -53,9 +92,9 @@ function generateGrid() {
     {
         for (let j = 0; j < width; j++)
         {
-            // var node = document.createElement("div");
-            var node = document.createElement("img");
-            node.src = 'tiles/arabesque.png'
+            var node = document.createElement("div");
+            // var node = document.createElement("img");
+            // node.src = 'tiles/arabesque.png'
             node.classList.add(tileClass);
 
             node.dataset.i = i;
