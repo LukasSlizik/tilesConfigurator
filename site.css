@@ -1,0 +1,9 @@
+div.tile {
+    display: inline-block; 
+    height: 100px; 
+    width: 100px;
+    margin: 2px;
+    border-style: dotted;
+    border-color: gray;
+    border-width: 1px;
+}
