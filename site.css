@@ -7,3 +7,22 @@
     border-color: gray;
     border-width: 1px;
 }
+
+.nonFirstRow {
+    margin-top:-130px;
+}
+
+.oddRow {
+    margin-left: 10px;
+}
+
+.evenRow {
+    margin-left:145px; 
+}
+
+img.arabesque {
+    background-image: url("tiles/arabesque.png");
+    width: 232px;
+    height: 256px;
+    margin-left: 35px
+}

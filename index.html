@@ -1,22 +1,69 @@
 <html>
-    <head>
-        <script type="text/javascript" src="site.js"></script>
-        <link rel="stylesheet" type="text/css" href="site.css">
-    </head>
-    <body>
-        <div>
-            <label for="heightSelector">Height</label>
-            <input type="number" class="dimensionSelector" id="heightSelector" min="1" max="10" />
+
+<head>
+    <script type="text/javascript" src="site.js"></script>
+    <link rel="stylesheet" type="text/css" href="site.css">
+</head>
+
+<body>
+    <!-- <div>
+        <div class="oddRow">
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
         </div>
-        <div>
-            <label for="widthSelector">Width</label>
-            <input type="number" class="dimensionSelector" id="widthSelector" min="1" max="10" />
+
+        <div class="nonFirstRow evenRow">
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
         </div>
 
-        <div id="tileSelector"></div>
+        <div class="nonFirstRow oddRow">
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+        </div>
 
-        <br>
+        <div class="nonFirstRow evenRow">
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+            <img class="arabesque" />
+        </div>
+    </div> -->
 
-        <div id="grid"></div>
-    </body>
+    <div>
+        <label for="heightSelector">Height</label>
+        <input type="number" class="dimensionSelector" id="heightSelector" min="1" max="10" />
+    </div>
+    <div>
+        <label for="widthSelector">Width</label>
+        <input type="number" class="dimensionSelector" id="widthSelector" min="1" max="10" />
+    </div>
+
+    <div id="formSelector">
+        <div>
+            <input type="radio" name="tileForm" id="square" value="square" checked />
+            <label for="square">Square</label>
+        </div>
+
+        <div>
+            <input type="radio" name="tileForm" id="arabesque" value="arabesque" />
+            <label for="arabesque">Arabesque</label>
+        </div>
+    </div>
+
+    <div id="tileSelector"></div>
+
+    <br>
+
+    <div id="grid"></div>
+</body>
+
 </html>

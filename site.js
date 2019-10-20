@@ -17,8 +17,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var selectors = document.getElementsByClassName(dimensionSelectorClass);
     for (let selector of selectors) {
         selector.addEventListener("click", function(event) {
-            // generateGrid();
-            generateArabesqueGrid();
+            
+            var formSelector = document.getElementById("formSelector");
+
+            generateGrid();
+            // generateArabesqueGrid();
         });
     }
 
@@ -66,6 +69,7 @@ function generateArabesqueGrid() {
                 event.target.classList.add(tileSetClass);
             });
 
+            // restore selected configuration
             var existingConfiguration = currentConfigurations.filter(function(configuration) { 
                 return (configuration.i == i) && (configuration.j == j);
             });
@@ -93,8 +97,6 @@ function generateGrid() {
         for (let j = 0; j < width; j++)
         {
             var node = document.createElement("div");
-            // var node = document.createElement("img");
-            // node.src = 'tiles/arabesque.png'
             node.classList.add(tileClass);
 
             node.dataset.i = i;
