@@ -12,21 +12,40 @@ const heightSelectorId = "heightSelector";
 const gridId = "grid";
 const tileClass = "tile";
 const tileSetClass = "tileSet";
+const tileFormName = "tileForm"
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
     var selectors = document.getElementsByClassName(dimensionSelectorClass);
-    for (let selector of selectors) {
-        selector.addEventListener("click", function(event) {
-            
-            var formSelector = document.getElementById("formSelector");
 
+    for (let selector of selectors) {
+        selector.addEventListener("click", function (event) {
             generateGrid();
-            // generateArabesqueGrid();
         });
     }
 
     populateTiles();
 });
+
+function generateGrid() {
+    switch (getSelectedTileForm()) {
+        case 'square':
+            generateSquareGrid();
+            break;
+        case 'arabesque':
+            generateArabesqueGrid();
+            break;
+        default:
+            console.error('unknown tile form');
+    }
+}
+
+function getSelectedTileForm() {
+    var allTileForms = document.getElementsByName(tileFormName);
+    for (var i = 0; i < allTileForms.length; i++) {
+        if (allTileForms[i].checked)
+            return allTileForms[i].value;
+    }
+}
 
 function populateTiles() {
     var tileSelector = document.getElementById(tileSelectorId);
@@ -37,7 +56,7 @@ function populateTiles() {
 
         div.id = tiles[index];
         div.style.backgroundImage = `url('${tilesBasePath}${tiles[index]}')`;
-        div.onclick = function(event) {
+        div.onclick = function (event) {
             selectedTile = (event.target).id;
         }
 
@@ -48,29 +67,27 @@ function populateTiles() {
 function generateArabesqueGrid() {
     saveCurrentConfiguration();
     clearGrid();
-    
+
     var height = document.getElementById(heightSelectorId).value;
     var width = document.getElementById(widthSelectorId).value;
 
     var grid = document.getElementById(gridId);
-    for (let i = 0; i < height; i++)
-    {
-        for (let j = 0; j < width; j++)
-        {
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
             var node = document.createElement("img");
             node.src = 'tiles/arabesque.png'
             node.classList.add(tileClass);
 
             node.dataset.i = i;
             node.dataset.j = j;
-            node.addEventListener("click", function(event) {
+            node.addEventListener("click", function (event) {
                 var url = `url('${tilesBasePath}${selectedTile}')`;
                 event.target.style.backgroundImage = url;
                 event.target.classList.add(tileSetClass);
             });
 
             // restore selected configuration
-            var existingConfiguration = currentConfigurations.filter(function(configuration) { 
+            var existingConfiguration = currentConfigurations.filter(function (configuration) {
                 return (configuration.i == i) && (configuration.j == j);
             });
             if (existingConfiguration.length == 1) {
@@ -84,30 +101,28 @@ function generateArabesqueGrid() {
     }
 }
 
-function generateGrid() {
+function generateSquareGrid() {
     saveCurrentConfiguration();
     clearGrid();
-    
+
     var height = document.getElementById(heightSelectorId).value;
     var width = document.getElementById(widthSelectorId).value;
 
     var grid = document.getElementById(gridId);
-    for (let i = 0; i < height; i++)
-    {
-        for (let j = 0; j < width; j++)
-        {
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
             var node = document.createElement("div");
             node.classList.add(tileClass);
 
             node.dataset.i = i;
             node.dataset.j = j;
-            node.addEventListener("click", function(event) {
+            node.addEventListener("click", function (event) {
                 var url = `url('${tilesBasePath}${selectedTile}')`;
                 event.target.style.backgroundImage = url;
                 event.target.classList.add(tileSetClass);
             });
 
-            var existingConfiguration = currentConfigurations.filter(function(configuration) { 
+            var existingConfiguration = currentConfigurations.filter(function (configuration) {
                 return (configuration.i == i) && (configuration.j == j);
             });
             if (existingConfiguration.length == 1) {
