@@ -1,10 +1,8 @@
 var tiles = ["tile1.png", "tile2.png", "tile3.png"];
-
 var tilesBasePath = "tiles/"
 var selectedTile = tiles[0];
 var currentConfigurations = [];
-
-// classes and IDs
+var supportedForms = ['square', 'arabesque'];
 const dimensionSelectorClass = "dimensionSelector";
 const tileSelectorId = "tileSelector";
 const widthSelectorId = "widthSelector";
@@ -14,23 +12,48 @@ const tileClass = "tile";
 const tileSetClass = "tileSet";
 const tileFormName = "tileForm"
 const formSelectorId = "formSelector";
-
-var supportedForms = ['square', 'arabesque'];
+const dimensionsId = "dimensions"
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var selectors = document.getElementsByClassName(dimensionSelectorClass);
-
+    generateDimensionSelectors();
     generateFormSelector();
+    generateTiles();
 
-    for (let selector of selectors) {
-        selector.addEventListener("change", function (event) {
-            refreshGrid();
-        });
-    }
-
-    populateTiles();
     refreshGrid();
 });
+
+function generateDimensionSelectors() {
+    var dimensionsDiv = document.getElementById(dimensionsId);
+
+    var heightSelector = createDimensionSelector('Height', 'heightSelector', 1, 10, 5);
+    var widthSelector = createDimensionSelector('Width', 'widthSelector', 1, 10, 5)
+
+    dimensionsDiv.appendChild(heightSelector);
+    dimensionsDiv.appendChild(widthSelector);
+}
+
+function createDimensionSelector(innerText, id, min, max, value) {
+    var divElement = document.createElement("div");
+
+    var labelElement = document.createElement("label");
+    labelElement.innerText = innerText;
+
+    var inputElement = document.createElement("input");
+    inputElement.type = "number";
+    inputElement.id = id;
+    inputElement.value = 5;
+    inputElement.min = 1;
+    inputElement.max = 10;
+
+    inputElement.addEventListener("change", function (event) {
+        refreshGrid();
+    });
+
+    divElement.appendChild(labelElement);
+    divElement.appendChild(inputElement);
+
+    return divElement;
+}
 
 function generateFormSelector() {
     var grid = document.getElementById(tileSelectorId);
@@ -59,7 +82,6 @@ function createOneTileFormDiv(form) {
     inputDiv.addEventListener("click", function (event) {
         refreshGrid();
     });
-
 
     // label
     var labelDiv = document.createElement("label");
@@ -93,7 +115,7 @@ function getSelectedTileForm() {
     }
 }
 
-function populateTiles() {
+function generateTiles() {
     var tileSelector = document.getElementById(tileSelectorId);
 
     for (index in tiles) {
