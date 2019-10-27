@@ -15,21 +15,36 @@ const formSelectorId = "formSelector";
 const dimensionsId = "dimensions"
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    generateDimensionSelectors();
-    generateFormSelector();
-    generateTiles();
-
-    refreshGrid();
+    generateConfigurator();
+    refresh();
 });
 
-function generateDimensionSelectors() {
-    var dimensionsDiv = document.getElementById(dimensionsId);
+function generateConfigurator() {
+    var tileConfigurator = document.querySelector("tileConfigurator");
+    tileConfigurator.appendChild(createDimensionSelectors());
+    tileConfigurator.appendChild(createFormSelector());
+    tileConfigurator.appendChild(createTiles());
+    tileConfigurator.appendChild(createGrid());
+}
+
+function createGrid() {
+    var grid = document.createElement("div");
+    grid.id = gridId;
+
+    return grid;
+}
+
+function createDimensionSelectors() {
+    var dimensionsDiv = document.createElement('div');
+    dimensionsDiv.id = dimensionsId;
 
     var heightSelector = createDimensionSelector('Height', 'heightSelector', 1, 10, 5);
     var widthSelector = createDimensionSelector('Width', 'widthSelector', 1, 10, 5)
 
     dimensionsDiv.appendChild(heightSelector);
     dimensionsDiv.appendChild(widthSelector);
+
+    return dimensionsDiv;
 }
 
 function createDimensionSelector(innerText, id, min, max, value) {
@@ -46,7 +61,7 @@ function createDimensionSelector(innerText, id, min, max, value) {
     inputElement.max = 10;
 
     inputElement.addEventListener("change", function (event) {
-        refreshGrid();
+        refresh();
     });
 
     divElement.appendChild(labelElement);
@@ -55,9 +70,7 @@ function createDimensionSelector(innerText, id, min, max, value) {
     return divElement;
 }
 
-function generateFormSelector() {
-    var grid = document.getElementById(tileSelectorId);
-
+function createFormSelector() {
     var formSelectorDiv = document.createElement("div");
     formSelectorDiv.id = formSelectorId;
 
@@ -65,8 +78,7 @@ function generateFormSelector() {
         formSelectorDiv.appendChild(createOneTileFormDiv(form));
     });
 
-    grid.appendChild(formSelectorDiv);
-    document.getElementById(supportedForms[0]).checked = true;  // checks the firsts supported form
+    return formSelectorDiv;
 }
 
 function createOneTileFormDiv(form) {
@@ -80,7 +92,7 @@ function createOneTileFormDiv(form) {
     inputDiv.name = tileFormName;
 
     inputDiv.addEventListener("click", function (event) {
-        refreshGrid();
+        refresh();
     });
 
     // label
@@ -94,7 +106,7 @@ function createOneTileFormDiv(form) {
     return tileFormDiv;
 }
 
-function refreshGrid() {
+function refresh() {
     switch (getSelectedTileForm()) {
         case 'square':
             generateSquareGrid();
@@ -115,8 +127,9 @@ function getSelectedTileForm() {
     }
 }
 
-function generateTiles() {
-    var tileSelector = document.getElementById(tileSelectorId);
+function createTiles() {
+    var tileSelector = document.createElement("div");
+    tileSelector.id = tileSelectorId;
 
     for (index in tiles) {
         var div = document.createElement("div");
@@ -130,6 +143,8 @@ function generateTiles() {
 
         tileSelector.appendChild(div);
     }
+
+    return tileSelector;
 }
 
 function generateArabesqueGrid() {
