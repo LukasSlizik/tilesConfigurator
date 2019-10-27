@@ -13,9 +13,14 @@ const gridId = "grid";
 const tileClass = "tile";
 const tileSetClass = "tileSet";
 const tileFormName = "tileForm"
+const formSelectorId = "formSelector";
+
+var supportedForms = ['square', 'arabesque'];
 
 document.addEventListener("DOMContentLoaded", function (event) {
     var selectors = document.getElementsByClassName(dimensionSelectorClass);
+
+    generateFormSelector();
 
     for (let selector of selectors) {
         selector.addEventListener("click", function (event) {
@@ -25,6 +30,41 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     populateTiles();
 });
+
+function generateFormSelector() {
+    var grid = document.getElementById(tileSelectorId);
+
+    var formSelectorDiv = document.createElement("div");
+    formSelectorDiv.id = formSelectorId;
+
+    supportedForms.forEach(function (form) {
+        formSelectorDiv.appendChild(createOneTileFormDiv(form));
+    });
+
+    grid.appendChild(formSelectorDiv);
+    document.getElementById(supportedForms[0]).checked = true;  // checks the firsts supported form
+}
+
+function createOneTileFormDiv(form) {
+    var tileFormDiv = document.createElement("div");
+
+    // input
+    var inputDiv = document.createElement("input");
+    inputDiv.type = "radio";
+    inputDiv.id = form;
+    inputDiv.value = form;
+    inputDiv.name = tileFormName;
+
+    // label
+    var labelDiv = document.createElement("label");
+    labelDiv.innerText = form;
+
+    // append to the tileFormDiv
+    tileFormDiv.appendChild(inputDiv);
+    tileFormDiv.appendChild(labelDiv);
+
+    return tileFormDiv;
+}
 
 function generateGrid() {
     switch (getSelectedTileForm()) {
