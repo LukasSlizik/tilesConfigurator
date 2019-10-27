@@ -23,12 +23,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
     generateFormSelector();
 
     for (let selector of selectors) {
-        selector.addEventListener("click", function (event) {
-            generateGrid();
+        selector.addEventListener("change", function (event) {
+            refreshGrid();
         });
     }
 
     populateTiles();
+    refreshGrid();
 });
 
 function generateFormSelector() {
@@ -55,6 +56,11 @@ function createOneTileFormDiv(form) {
     inputDiv.value = form;
     inputDiv.name = tileFormName;
 
+    inputDiv.addEventListener("click", function (event) {
+        refreshGrid();
+    });
+
+
     // label
     var labelDiv = document.createElement("label");
     labelDiv.innerText = form;
@@ -66,7 +72,7 @@ function createOneTileFormDiv(form) {
     return tileFormDiv;
 }
 
-function generateGrid() {
+function refreshGrid() {
     switch (getSelectedTileForm()) {
         case 'square':
             generateSquareGrid();
