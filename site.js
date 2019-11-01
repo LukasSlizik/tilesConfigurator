@@ -159,9 +159,12 @@ function generateArabesqueGrid() {
     var grid = document.getElementById(gridId);
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
-            var node = document.createElement("img");
+            var node = document.createElement("div");
             node.src = 'tiles/arabesque.png'
             node.classList.add(tileClass);
+            node.classList.add('arabesque')
+            // if (i%2 == 1)
+            //     node.classList.add('oddRow')
 
             node.dataset.i = i;
             node.dataset.j = j;
