@@ -78,6 +78,8 @@ function createFormSelector() {
         formSelectorDiv.appendChild(createOneTileFormDiv(form));
     });
 
+    // select first radio button
+    formSelectorDiv.querySelector(`input[name=${tileFormName}]`).checked = true;
     return formSelectorDiv;
 }
 
