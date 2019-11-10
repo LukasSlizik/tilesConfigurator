@@ -38,8 +38,8 @@ function createDimensionSelectors() {
     var dimensionsDiv = document.createElement('div');
     dimensionsDiv.id = dimensionsId;
 
-    var heightSelector = createDimensionSelector('Height', 'heightSelector', 1, 10, 5);
-    var widthSelector = createDimensionSelector('Width', 'widthSelector', 1, 10, 5)
+    var heightSelector = createDimensionSelector('Height', 'heightSelector', 1, 10, 1);
+    var widthSelector = createDimensionSelector('Width', 'widthSelector', 1, 20, 1)
 
     dimensionsDiv.appendChild(heightSelector);
     dimensionsDiv.appendChild(widthSelector);
@@ -56,9 +56,9 @@ function createDimensionSelector(innerText, id, min, max, value) {
     var inputElement = document.createElement("input");
     inputElement.type = "number";
     inputElement.id = id;
-    inputElement.value = 5;
-    inputElement.min = 1;
-    inputElement.max = 10;
+    inputElement.value = value;
+    inputElement.min = min;
+    inputElement.max = max;
 
     inputElement.addEventListener("change", function (event) {
         refresh();
@@ -157,36 +157,7 @@ function generateArabesqueGrid() {
     var width = document.getElementById(widthSelectorId).value;
 
     var grid = document.getElementById(gridId);
-    for (let i = 0; i < height; i++) {
-        for (let j = 0; j < width; j++) {
-            var node = document.createElement("div");
-            node.src = 'tiles/arabesque.png'
-            node.classList.add(tileClass);
-            node.classList.add('arabesque')
-            // if (i%2 == 1)
-            //     node.classList.add('oddRow')
 
-            node.dataset.i = i;
-            node.dataset.j = j;
-            node.addEventListener("click", function (event) {
-                var url = `url('${tilesBasePath}${selectedTile}')`;
-                event.target.style.backgroundImage = url;
-                event.target.classList.add(tileSetClass);
-            });
-
-            // restore selected configuration
-            var existingConfiguration = currentConfigurations.filter(function (configuration) {
-                return (configuration.i == i) && (configuration.j == j);
-            });
-            if (existingConfiguration.length == 1) {
-                node.style.backgroundImage = existingConfiguration[0].image;
-                node.classList.add(tileSetClass);
-            }
-
-            grid.appendChild(node);
-        }
-        grid.appendChild(document.createElement("br"));
-    }
 }
 
 function generateSquareGrid() {

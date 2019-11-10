@@ -2,27 +2,37 @@
     display: inline-block; 
     height: 100px; 
     width: 100px;
-    margin: 2px;
+    margin: 8px;
     border-style: dotted;
     border-color: gray;
     border-width: 1px;
+    background: transparent;
 }
 
-.nonFirstRow {
-    margin-top:-130px;
+.row {
+    resize:none;
 }
 
-.oddRow {
-    margin-left: 10px;
+.tileRow {
+    margin-top:-50px;
 }
 
-.evenRow {
-    margin-left:145px; 
+.firstInOddRow {
+    margin-left: -50px;
 }
 
 .arabesque {
-    background-image: url("tiles/arabesque.png");
+    background-image: url("tiles/arabesque/empty.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-attachment: scroll;
+    border-style: none;
+    pointer-events: visiblePainted;
+}
+
+#grid {
+    display: inline-block; 
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: dimgrey;
 }
