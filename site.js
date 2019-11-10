@@ -38,8 +38,8 @@ function createDimensionSelectors() {
     var dimensionsDiv = document.createElement('div');
     dimensionsDiv.id = dimensionsId;
 
-    var heightSelector = createDimensionSelector('Height', 'heightSelector', 1, 10, 5);
-    var widthSelector = createDimensionSelector('Width', 'widthSelector', 1, 10, 5)
+    var heightSelector = createDimensionSelector('Height', 'heightSelector', 1, 10, 1);
+    var widthSelector = createDimensionSelector('Width', 'widthSelector', 1, 20, 1)
 
     dimensionsDiv.appendChild(heightSelector);
     dimensionsDiv.appendChild(widthSelector);
@@ -56,9 +56,9 @@ function createDimensionSelector(innerText, id, min, max, value) {
     var inputElement = document.createElement("input");
     inputElement.type = "number";
     inputElement.id = id;
-    inputElement.value = 5;
-    inputElement.min = 1;
-    inputElement.max = 10;
+    inputElement.value = value;
+    inputElement.min = min;
+    inputElement.max = max;
 
     inputElement.addEventListener("change", function (event) {
         refresh();
@@ -157,19 +157,28 @@ function generateArabesqueGrid() {
     var width = document.getElementById(widthSelectorId).value;
 
     var grid = document.getElementById(gridId);
+
     for (let i = 0; i < height; i++) {
+        var row = document.createElement("div");
+        row.classList.add("row");
+
+        let nobrElement = document.createElement("nobr");
+        row.appendChild(nobrElement);
+
         for (let j = 0; j < width; j++) {
             var node = document.createElement("div");
-            node.src = 'tiles/arabesque.png'
             node.classList.add(tileClass);
             node.classList.add('arabesque')
-            // if (i%2 == 1)
-            //     node.classList.add('oddRow')
+            if (i % 2 == 1) {
+                if (j == 0)
+                    node.classList.add('firstInOddRow');
+            }
+            node.classList.add('tileRow');
 
             node.dataset.i = i;
             node.dataset.j = j;
             node.addEventListener("click", function (event) {
-                var url = `url('${tilesBasePath}${selectedTile}')`;
+                var url = `url('${tilesBasePath}/arabesque/fill.png')`;
                 event.target.style.backgroundImage = url;
                 event.target.classList.add(tileSetClass);
             });
@@ -183,10 +192,17 @@ function generateArabesqueGrid() {
                 node.classList.add(tileSetClass);
             }
 
-            grid.appendChild(node);
+            nobrElement.appendChild(node);
         }
-        grid.appendChild(document.createElement("br"));
+        grid.appendChild(row);
     }
+
+    // set the max width of the grid to drop the tiles
+    // magic
+    let m = 8;
+    let w = ((width * 100) - 50) + ((width * 2) - 1) * m;
+    let h = ((height-1) * 50) + ((height-1) * m);
+    grid.setAttribute("style", `width: ${w}px; height: ${h}px`);
 }
 
 function generateSquareGrid() {
