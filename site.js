@@ -157,7 +157,6 @@ function generateArabesqueGrid() {
     var width = document.getElementById(widthSelectorId).value;
 
     var grid = document.getElementById(gridId);
-
 }
 
 function generateSquareGrid() {
